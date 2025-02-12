@@ -3,15 +3,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-errors:
-    uses: ./.github/workflows/actions.yaml
-    with:
-        test-name: "Run Minitest"
-
   run-minitest:
     name: Run Minitest
     runs-on: ubuntu-22.04
     steps:
-      - name: Simulate failure
-        run: echo "Error always failing"
+        - uses: actions/checkout@v4
+        - uses: ./.github/actions/check_errors
+        - name: Simulate failure
+          run: echo "Error always failing"
   
