@@ -4,7 +4,7 @@ on:
 
 jobs:
   check-errors:
-    uses: alphagov/govuk-ci-github-actions@main
+    uses: ./actions.yaml@main
     with:
         test-name: "Run Minitest"
 
