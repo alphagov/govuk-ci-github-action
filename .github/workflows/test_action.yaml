@@ -1,0 +1,17 @@
+name: Run Minitest
+on:
+  workflow_dispatch:
+
+jobs:
+  check-errors:
+    uses: alphagov/govuk-ci-github-actions@main
+    with:
+        test-name: "Run Minitest"
+
+  run-minitest:
+    name: Run Minitest
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Simulate failure
+        run: echo "Error always failing"
+  
