@@ -4,7 +4,7 @@ on:
 
 jobs:
   check-errors:
-    uses: ./actions.yaml@main
+    uses: ./.github/actions/actions.yaml@main
     with:
         test-name: "Run Minitest"
 
