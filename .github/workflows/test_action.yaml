@@ -6,9 +6,14 @@ jobs:
   run-minitest:
     name: Run Minitest
     runs-on: ubuntu-22.04
+
     steps:
         - uses: actions/checkout@v4
-        - uses: ./.github/actions/check_errors
         - name: Simulate failure
-          run: echo "Error always failing"
+          id: run_test
+          continue-on-error: true
+          run: | 
+            echo "Error always failing"
+            exit 1
+        - uses: ./.github/actions/check_errors
   

@@ -8,4 +8,5 @@ inputs:
     default: "Run Minitest"
 runs:
   using: node20
-  main: check_errors.js
+  # main: check_errors.js
+  main: ../../../dist/index.js
