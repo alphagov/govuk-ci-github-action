@@ -11,7 +11,7 @@ jobs:
         - uses: actions/checkout@v4
         - name: Simulate failure
           id: run_test
-          continue-on-error: true
+          # continue-on-error: true
           run: | 
             echo "Error always failing"
             exit 1
