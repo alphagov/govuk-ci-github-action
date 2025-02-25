@@ -6,7 +6,7 @@ inputs:
     required: true
     default: "govuk-platform-engineering"
   github:
-    description: "Github Action github object"
+    description: "Github Action github json"
     required: true
 runs:
   using: "composite"
@@ -14,7 +14,7 @@ runs:
     - name: Send slack
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        webhook: "${{ secrets.SLACK_WEBHOOK_URL }}"
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
         webhook-type: incoming-webhook
         payload: |
           {

@@ -6,7 +6,7 @@ inputs:
     required: true
     default: "govuk-platform-engineering"
   github:
-    description: "Github Action github object"
+    description: "Github Action github json"
     required: true
 runs:
   using: "composite"
@@ -14,18 +14,18 @@ runs:
     - name: Send slack
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        webhook: "${{ secrets.SLACK_WEBHOOK_URL }}"
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
         webhook-type: incoming-webhook
         payload: |
           {
             "channel": "${{ inputs.channel }}",
-            "text": "The <https://github.com/${{ inputs.github.repository }}> CI test failed.",
+            "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> CI test failed.",
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                    "text": "The <https://github.com/${{ inputs.github.repository }}> failed.",
+                    "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> failed.",
                 },
                 "accessory": {
                   "type": "button",
@@ -33,7 +33,7 @@ runs:
                       "type": "plain_text",
                       "text": "Check the build logs for details"
                   },
-                  "url": "${{ inputs.github.server_url }}/${{ inputs.github.repository }}/actions/runs/${{ inputs.github.run_id }}",
+                  "url": "${{ fromJson(inputs.github).server_url }}/${{ fromJson(inputs.github).repository }}/actions/runs/${{ fromJson(inputs.github).run_id }}",
                   "action_id": "button-view-workflow"
                 }
               }
