@@ -1,6 +1,9 @@
 name: "Send CI errors to slack channel"
 description: "Send CI errors to a nominated slack channel"
 inputs:
+  slack_webhook_url:
+    description: "Slack webhook URL"
+    required: true
   channel:
     description: "Name of the channel to send error notifications to"
     required: true
@@ -14,7 +17,7 @@ runs:
     - name: Send slack
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook: ${{ inputs.slack_webhook_url }}
         webhook-type: incoming-webhook
         payload: |
           {
