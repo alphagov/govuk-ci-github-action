@@ -1,11 +1,41 @@
 name: "Send CI errors to slack channel"
-author: GDS
 description: "Send CI errors to a nominated slack channel"
 inputs:
-  test-name:
-    description: "Name of the test to check for CI failures"
+  channel:
+    description: "Name of the channel to send error notifications to"
     required: true
-    default: "Run Minitest"
+    default: "govuk-platform-engineering"
+  github:
+    description: "Github Action github object"
+    required: true
 runs:
-  using: ubuntu-latest
-  main: check_errors.js
+  using: "composite"
+  steps:
+    - name: Send slack
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        webhook: "${{ secrets.SLACK_WEBHOOK_URL }}"
+        webhook-type: incoming-webhook
+        payload: |
+          {
+            "channel": "${{ inputs.channel }}",
+            "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> CI test failed.",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                    "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> failed.",
+                },
+                "accessory": {
+                  "type": "button",
+                  "text": {
+                      "type": "plain_text",
+                      "text": "Check the build logs for details"
+                  },
+                  "url": "${{ fromJson(inputs.github).server_url }}/${{ fromJson(inputs.github).repository }}/actions/runs/${{ fromJson(inputs.github).run_id }}",
+                  "action_id": "button-view-workflow"
+                }
+              }
+            ]
+          }
