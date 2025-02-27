@@ -8,12 +8,17 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-        - uses: actions/checkout@v4
-        - name: Simulate failure
-          id: run_test
-          # continue-on-error: true
-          run: | 
-            echo "Error always failing"
-            exit 1
-        - uses: ./.github/actions/check_errors
-  
+      - uses: actions/checkout@v4
+      - name: Simulate failure
+        id: run_test
+        env:
+          JOB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$JOB_CONTEXT" 
+          echo "Error always failing"
+          exit 1
+      - if: ${{ failure() }}
+        uses: ./.github/actions/send_ci_errors
+        with:
+          channel: test-ci
+          github: ${{ github }}
