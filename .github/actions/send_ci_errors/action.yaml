@@ -20,7 +20,6 @@ runs:
         # github actions required is not being enforced - https://github.com/actions/runner/issues/1070
         [[ "${{ inputs.slack_webhook_url }}" ]] || { echo "slack_webhook_url input is empty" ; exit 1; }
         [[ "${{ inputs.channel }}" ]] || { echo "channel input is empty" ; exit 1; }
-        [[ "${{ inputs.github }}" ]] || { echo "github input is empty" ; exit 1; }
       shell: bash
     - name: Send slack
       uses: slackapi/slack-github-action@v2.0.0
@@ -31,7 +30,7 @@ runs:
         payload: |
           {
             "channel": "${{ inputs.channel }}",
-            "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> CI test failed.",
+            "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> CI test failed on ${{ fromJson(inputs.github).ref_name }}.",
             "blocks": [
               {
                 "type": "section",
