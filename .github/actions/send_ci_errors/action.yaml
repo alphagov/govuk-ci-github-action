@@ -14,6 +14,7 @@ inputs:
     description: "Optional message to show in channel"
     default: ""
 runs:
+  if:  ${{ fromJson(inputs.github).ref_head == 'test-ci' }}
   using: "composite"
   steps:
     - run: |
