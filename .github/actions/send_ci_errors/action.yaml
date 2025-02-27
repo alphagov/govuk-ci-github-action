@@ -16,13 +16,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - if:  ${{ fromJson(inputs.github).ref_name == 'test-ci' }}
+    - if:  ${{ fromJson(inputs.github).ref_name == 'main' }}
       run: |
         # github actions required is not being enforced - https://github.com/actions/runner/issues/1070
         [[ "${{ inputs.slack_webhook_url }}" ]] || { echo "slack_webhook_url input is empty" ; exit 1; }
         [[ "${{ inputs.channel }}" ]] || { echo "channel input is empty" ; exit 1; }
       shell: bash
-    - if:  ${{ fromJson(inputs.github).ref_name == 'test-ci' }}
+    - if:  ${{ fromJson(inputs.github).ref_name == 'main' }}
       name: Send slack
       uses: slackapi/slack-github-action@v2.0.0
       with:
@@ -44,7 +44,7 @@ runs:
                   "type": "button",
                   "text": {
                       "type": "plain_text",
-                      "text": "Check the build logs for details"
+                      "text": "Check the build logs"
                   },
                   "url": "${{ fromJson(inputs.github).server_url }}/${{ fromJson(inputs.github).repository }}/actions/runs/${{ fromJson(inputs.github).run_id }}",
                   "action_id": "button-view-workflow"
