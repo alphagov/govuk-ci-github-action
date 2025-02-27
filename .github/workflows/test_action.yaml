@@ -23,5 +23,6 @@ jobs:
       - if: ${{ failure() }}
         uses: ./.github/actions/send_ci_errors
         with:
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
           channel: test-ci
-          github: ${{ github }}
+          github: ${{ toJson(github) }}
