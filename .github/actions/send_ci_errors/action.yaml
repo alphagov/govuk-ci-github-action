@@ -36,7 +36,7 @@ runs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> failed.\n${{ inputs.message }}",
+                  "text": "The <https://github.com/${{ fromJson(inputs.github).repository }}> failed on ${{ fromJson(inputs.github).ref_name }}.\n${{ inputs.message }}",
                 },
                 "accessory": {
                   "type": "button",
