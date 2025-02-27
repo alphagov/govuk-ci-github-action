@@ -16,6 +16,10 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - env:
+        JOB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$JOB_CONTEXT" 
     - if:  ${{ fromJson(inputs.github).ref_name == 'main' }}
       run: |
         # github actions required is not being enforced - https://github.com/actions/runner/issues/1070
